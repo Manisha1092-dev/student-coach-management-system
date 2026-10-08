@@ -10,4 +10,5 @@ public class StudentCoachManagementApplication {
 		SpringApplication.run(StudentCoachManagementApplication.class, args);
 	}
 
+
 }
