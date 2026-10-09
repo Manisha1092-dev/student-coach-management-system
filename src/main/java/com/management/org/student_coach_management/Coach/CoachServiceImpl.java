@@ -1,10 +1,12 @@
 package com.management.org.student_coach_management.Coach;
 
 import com.management.org.student_coach_management.Coach.entity.Coach;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class CoachServiceImpl implements CoachService {
 
     @Override
