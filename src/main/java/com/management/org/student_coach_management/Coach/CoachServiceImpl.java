@@ -9,9 +9,15 @@ import java.util.List;
 @Service
 public class CoachServiceImpl implements CoachService {
 
+    private final CoachRepository coachRepository;
+
+    CoachServiceImpl(CoachRepository coachRepository) {
+        this.coachRepository = coachRepository;
+    }
+
     @Override
     public List<Coach> getCoaches() {
         // Implement the logic to retrieve coaches from the database or any other source
-        return new ArrayList<>(); // Return an empty list for now
+        return coachRepository.findAll();
     }
 }

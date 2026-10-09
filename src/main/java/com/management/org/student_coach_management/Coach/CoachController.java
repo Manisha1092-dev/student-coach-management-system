@@ -12,13 +12,13 @@ import java.util.List;
 @RequestMapping("/api/v1/coaches")
 public class CoachController {
 
-    private CoachService coachService;
+    private final CoachService coachService;
 
     public CoachController(CoachService coachService) {
         this.coachService = coachService;
     }
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<Coach>> getCoaches() {
         return ResponseEntity.ok(coachService.getCoaches());
     }
