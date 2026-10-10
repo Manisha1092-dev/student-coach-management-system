@@ -1,8 +1,9 @@
 package com.management.org.student_coach_management.Coach;
 
 import com.management.org.student_coach_management.Coach.dto.CoachDTO;
-import com.management.org.student_coach_management.Student.entity.Student;
+import com.management.org.student_coach_management.Student.dto.StudentDTO;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +27,10 @@ public class CoachController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CoachDTO>> getCoaches() {
-        return ResponseEntity.ok(coachService.getCoaches());
+    public ResponseEntity<List<CoachDTO>> getCoaches(@RequestParam(required = false, defaultValue = "0") int pageNo,
+                                                     @RequestParam(required = false, defaultValue = "5") int pageSize) {
+
+        return ResponseEntity.ok(coachService.getCoaches(PageRequest.of(pageNo, pageSize)));
     }
 
     @GetMapping("/{id}")
@@ -46,7 +49,9 @@ public class CoachController {
     }
 
     @GetMapping("/{id}/enrolled-students")
-    public ResponseEntity<List<Student>> getEnrolledStudents(@PathVariable int id) {
-        return new ResponseEntity<>(coachService.getEnrolledStudents(id), HttpStatus.OK);
+    public ResponseEntity<List<StudentDTO>> getEnrolledStudents(@RequestParam(required = false, defaultValue = "0") int pageNo,
+                                                                @RequestParam(required = false, defaultValue = "5") int pageSize,
+                                                                @PathVariable int id) {
+        return new ResponseEntity<>(coachService.getEnrolledStudents(PageRequest.of(pageNo, pageSize), id), HttpStatus.OK);
     }
 }

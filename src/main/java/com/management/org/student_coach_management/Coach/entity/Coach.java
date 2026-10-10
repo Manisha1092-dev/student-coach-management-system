@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "coach")
-@Data
+@Data                    // generates getters, setters, toString, equals, and hashCode methods
 @NoArgsConstructor       // generates empty constructor
 @AllArgsConstructor      // generates constructor with all fields
 @Builder                 // generates builder() method
@@ -37,7 +37,7 @@ public class Coach {
     @Column(name = "email")
     private String email;
 
-    @OneToMany(mappedBy = "coach" , cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "coach", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Student> students;
 

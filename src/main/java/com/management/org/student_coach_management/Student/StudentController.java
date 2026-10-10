@@ -2,6 +2,7 @@ package com.management.org.student_coach_management.Student;
 
 import com.management.org.student_coach_management.Student.dto.StudentDTO;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +25,9 @@ public class StudentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<StudentDTO>> getStudents() {
-        return new ResponseEntity<>(studentService.getStudents(), HttpStatus.OK);
+    public ResponseEntity<List<StudentDTO>> getStudents(@RequestParam(required = false, defaultValue = "0") int pageNo,
+                                                        @RequestParam(required = false, defaultValue = "5") int pageSize) {
+        return new ResponseEntity<>(studentService.getStudents(PageRequest.of(pageNo, pageSize)), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

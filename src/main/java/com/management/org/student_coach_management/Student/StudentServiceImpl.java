@@ -4,6 +4,8 @@ import com.management.org.student_coach_management.Student.Exception.StudentNotF
 import com.management.org.student_coach_management.Student.dto.StudentDTO;
 import com.management.org.student_coach_management.Student.entity.Student;
 import com.management.org.student_coach_management.Student.mapper.StudentMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,9 +27,14 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentDTO> getStudents() {
-        return studentRepository.findAll().stream().map(StudentMapper::toDTO).toList();
+    public List<StudentDTO> getStudents(Pageable pageable) {
+        Page<Student> studentsPage = studentRepository.findAll(pageable);
+        return studentsPage.getContent()
+                .stream()
+                .map(StudentMapper::toDTO)
+                .toList();
     }
+
 
     @Override
     public StudentDTO getStudent(int id) {
