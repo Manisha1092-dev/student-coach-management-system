@@ -4,6 +4,7 @@ import com.management.org.student_coach_management.Coach.dto.CoachDTO;
 import com.management.org.student_coach_management.Student.dto.StudentDTO;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,9 +29,12 @@ public class CoachController {
 
     @GetMapping
     public ResponseEntity<List<CoachDTO>> getCoaches(@RequestParam(required = false, defaultValue = "0") int pageNo,
-                                                     @RequestParam(required = false, defaultValue = "5") int pageSize) {
+                                                     @RequestParam(required = false, defaultValue = "5") int pageSize,
+                                                     @RequestParam(required = false,defaultValue = "id") String sortBy,
+                                                     @RequestParam(required = false,defaultValue = "asc") String sortDir) {
 
-        return ResponseEntity.ok(coachService.getCoaches(PageRequest.of(pageNo, pageSize)));
+        Sort sort = Sort.by(sortDir.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy);
+        return ResponseEntity.ok(coachService.getCoaches(PageRequest.of(pageNo, pageSize,sort)));
     }
 
     @GetMapping("/{id}")

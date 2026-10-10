@@ -3,6 +3,7 @@ package com.management.org.student_coach_management.Student;
 import com.management.org.student_coach_management.Student.dto.StudentDTO;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +27,42 @@ public class StudentController {
 
     @GetMapping
     public ResponseEntity<List<StudentDTO>> getStudents(@RequestParam(required = false, defaultValue = "0") int pageNo,
-                                                        @RequestParam(required = false, defaultValue = "5") int pageSize) {
-        return new ResponseEntity<>(studentService.getStudents(PageRequest.of(pageNo, pageSize)), HttpStatus.OK);
+                                                        @RequestParam(required = false, defaultValue = "5") int pageSize,
+                                                        @RequestParam(required = false, defaultValue = "id") String sortBy,
+                                                        @RequestParam(required = false, defaultValue = "asc") String sortDir) {
+        Sort sort = Sort.by(sortDir.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy);
+        return new ResponseEntity<>(studentService.getStudents(PageRequest.of(pageNo, pageSize, sort)), HttpStatus.OK);
+
+        /**
+         *
+         * /*
+         *  How pagination + sorting works in Spring Data:
+         *
+         *  1. Sorting is applied first across the entire dataset
+         *     (e.g., ORDER BY firstName ASC or DESC in SQL).
+         *
+         *  2. Pagination is applied next using LIMIT and OFFSET
+         *     (pageNo decides the offset, pageSize decides how many rows to fetch).
+         *
+         *  Examples:
+         *  - curl ...?pageSize=15 → returns all coaches (since total < 15),
+         *    default sort by id ascending.
+         *
+         *  - curl ...?pageNo=0&pageSize=3&sortBy=firstName&sortDir=asc →
+         *    sorts all coaches alphabetically A→Z, then returns the first 3.
+         *
+         *  - curl ...?pageNo=0&pageSize=3&sortBy=firstName&sortDir=desc →
+         *    sorts all coaches alphabetically Z→A, then returns the first 3.
+         *
+         *  In short: Spring Data always sorts the full dataset first,
+         *  then slices out the requested page.
+         *
+         *
+         * SELECT * FROM students
+         * ORDER BY first_name DESC
+         * LIMIT 3 OFFSET 0;
+         */
+
     }
 
     @GetMapping("/{id}")
