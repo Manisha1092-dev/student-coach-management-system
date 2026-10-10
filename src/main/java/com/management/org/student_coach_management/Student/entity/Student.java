@@ -10,6 +10,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+/**
+ * JPA entity representing a Student.
+ * Maps to the 'student' table and includes a reference to the assigned Coach.
+ */
 @Entity
 @Table(name = "student")
 @Data
@@ -40,9 +44,11 @@ public class Student {
     @Column(name="coach_id")
     private int coachId;
 
-    @ManyToOne
-    @JoinColumn(name = "coach_id", insertable = false, updatable = false)
-    @JsonBackReference
-    private Coach coach;
+    // Many-to-one relationship to Coach. coachId holds the FK value; the coach field
+        // provides the navigable association but is not used to write the FK (insertable=false, updatable=false).
+        @ManyToOne
+        @JoinColumn(name = "coach_id", insertable = false, updatable = false)
+        @JsonBackReference
+        private Coach coach;
 
 }

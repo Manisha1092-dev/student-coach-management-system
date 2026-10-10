@@ -7,6 +7,10 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
+/**
+ * Service interface defining coach-related operations. Implementations should
+ * perform business logic and mapping for Coach and related Student data.
+ */
 public interface CoachService {
 
     CoachDTO createCoach(@Valid CoachDTO coachDTO);

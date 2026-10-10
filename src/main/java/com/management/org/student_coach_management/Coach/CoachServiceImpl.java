@@ -15,6 +15,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of CoachService. Coordinates repository access for Coach
+ * operations and converts entities to DTOs for API responses.
+ */
 @Service
 public class CoachServiceImpl implements CoachService {
 
@@ -73,8 +77,9 @@ public class CoachServiceImpl implements CoachService {
         return CoachMapper.toDTO(coach);
     }
 
-    @Override
-    public List<StudentDTO> getEnrolledStudents(Pageable pageable, int id) {
+        /** Return a page of StudentDTOs enrolled with the given coach id. */
+        @Override
+        public List<StudentDTO> getEnrolledStudents(Pageable pageable, int id) {
         Coach coach = coachRepository.findById((long) id).orElse(null);
         if (coach == null) {
             throw new CoachNotFoundException("Coach not found with id: " + id);

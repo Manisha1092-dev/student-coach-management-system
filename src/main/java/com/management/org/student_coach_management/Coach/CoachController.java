@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * REST controller exposing endpoints to manage Coach resources.
+ * Supports CRUD and listing of coaches, and retrieving students enrolled with a coach.
+ */
 @RestController
 @RequestMapping("/api/v1/coaches")
 public class CoachController {
@@ -52,6 +56,7 @@ public class CoachController {
         return new ResponseEntity<>(coachService.deleteCoach(id), HttpStatus.OK);
     }
 
+    // Endpoint to fetch students enrolled with a specific coach (paginated)
     @GetMapping("/{id}/enrolled-students")
     public ResponseEntity<List<StudentDTO>> getEnrolledStudents(@RequestParam(required = false, defaultValue = "0") int pageNo,
                                                                 @RequestParam(required = false, defaultValue = "5") int pageSize,

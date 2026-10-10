@@ -5,6 +5,11 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
+/**
+ * Service interface that defines student-related operations.
+ * Implementations should handle business rules, validation and mapping
+ * between entities and DTOs.
+ */
 public interface StudentService {
 
     StudentDTO createStudent(StudentDTO studentDTO);

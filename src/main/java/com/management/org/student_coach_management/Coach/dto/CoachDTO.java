@@ -12,6 +12,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor       // generates empty constructor
 @AllArgsConstructor      // generates constructor with all fields
 @Builder                 // generates builder() method
+/**
+ * Data Transfer Object for Coach requests/responses.
+ * Uses validation annotations to ensure clients provide required fields.
+ */
 public class CoachDTO {
 
     @NotBlank(message = "First name is required")

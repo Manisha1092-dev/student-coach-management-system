@@ -10,6 +10,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Implementation of StudentService. Handles business logic for creating, reading,
+ * updating and deleting Student records and mapping between entities and DTOs.
+ */
 @Service
 public class StudentServiceImpl implements StudentService {
 
@@ -28,6 +32,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<StudentDTO> getStudents(Pageable pageable) {
+        // Fetch a page of Student entities from the repository using the provided Pageable
+        // (Pageable supports sorting + pagination at the DB level).
         Page<Student> studentsPage = studentRepository.findAll(pageable);
         return studentsPage.getContent()
                 .stream()

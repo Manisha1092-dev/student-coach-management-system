@@ -10,6 +10,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+/**
+ * Data Transfer Object for Student requests/responses.
+ * Validation annotations enforce required fields for incoming requests.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

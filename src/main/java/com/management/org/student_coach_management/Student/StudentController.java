@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * REST controller exposing endpoints to manage Student resources.
+ * Supports creating, listing (with pagination/sorting), retrieving, updating
+ * and deleting Student records.
+ */
 @RestController
 @RequestMapping("/api/v1/students")
 public class StudentController {
