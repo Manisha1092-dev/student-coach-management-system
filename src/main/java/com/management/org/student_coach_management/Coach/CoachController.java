@@ -1,6 +1,7 @@
 package com.management.org.student_coach_management.Coach;
 
 import com.management.org.student_coach_management.Coach.dto.CoachDTO;
+import com.management.org.student_coach_management.Student.entity.Student;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,5 +43,10 @@ public class CoachController {
     @DeleteMapping("/{id}")
     public ResponseEntity<CoachDTO> deleteCoach(@PathVariable int id) {
         return new ResponseEntity<>(coachService.deleteCoach(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/enrolled-students")
+    public ResponseEntity<List<Student>> getEnrolledStudents(@PathVariable int id) {
+        return new ResponseEntity<>(coachService.getEnrolledStudents(id), HttpStatus.OK);
     }
 }

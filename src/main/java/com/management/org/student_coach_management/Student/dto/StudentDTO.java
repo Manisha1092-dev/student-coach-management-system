@@ -2,6 +2,7 @@ package com.management.org.student_coach_management.Student.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,13 +24,12 @@ public class StudentDTO {
     @Email(message = "Email should be valid")
     private String email;
 
-    @NotBlank(message = "Enrollment date is mandatory")
+    @NotNull(message = "Date is required")
     private Date enrollmentDate;
 
     @NotBlank(message = "Major is mandatory")
     private String major;
 
-    @NotBlank(message = "Coach ID is mandatory")
     private int coachId;
-    
+
 }

@@ -1,10 +1,14 @@
 package com.management.org.student_coach_management.Coach.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.management.org.student_coach_management.Student.entity.Student;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Table(name = "coach")
@@ -32,5 +36,9 @@ public class Coach {
 
     @Column(name = "email")
     private String email;
+
+    @OneToMany(mappedBy = "coach" , cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Student> students;
 
 }

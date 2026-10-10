@@ -4,6 +4,7 @@ import com.management.org.student_coach_management.Coach.Exception.CoachNotFound
 import com.management.org.student_coach_management.Coach.dto.CoachDTO;
 import com.management.org.student_coach_management.Coach.entity.Coach;
 import com.management.org.student_coach_management.Coach.mapper.CoachMapper;
+import com.management.org.student_coach_management.Student.entity.Student;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -62,5 +63,16 @@ public class CoachServiceImpl implements CoachService {
         }
         coachRepository.delete(coach);
         return CoachMapper.toDTO(coach);
+    }
+
+    @Override
+    public List<Student> getEnrolledStudents(int id) {
+        Coach coach = coachRepository.findById((long) id).orElse(null);
+        if (coach == null) {
+            throw new CoachNotFoundException("Coach not found with id: " + id);
+        }
+
+
+        return coach.getStudents();
     }
 }
