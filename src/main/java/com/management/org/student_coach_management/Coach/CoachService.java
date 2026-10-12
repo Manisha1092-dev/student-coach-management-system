@@ -15,7 +15,7 @@ public interface CoachService {
 
     CoachDTO createCoach(@Valid CoachDTO coachDTO);
 
-    List<CoachDTO> getCoaches(Pageable pageable);
+    List<CoachDTO> getCoaches(String searchText, Pageable pageable);
 
     CoachDTO getCoachById(int id);
 

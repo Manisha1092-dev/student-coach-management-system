@@ -35,10 +35,11 @@ public class CoachController {
     public ResponseEntity<List<CoachDTO>> getCoaches(@RequestParam(required = false, defaultValue = "0") int pageNo,
                                                      @RequestParam(required = false, defaultValue = "5") int pageSize,
                                                      @RequestParam(required = false,defaultValue = "id") String sortBy,
-                                                     @RequestParam(required = false,defaultValue = "asc") String sortDir) {
+                                                     @RequestParam(required = false,defaultValue = "asc") String sortDir,
+                                                     @RequestParam(required = false) String searchText ){
 
         Sort sort = Sort.by(sortDir.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy);
-        return ResponseEntity.ok(coachService.getCoaches(PageRequest.of(pageNo, pageSize,sort)));
+        return ResponseEntity.ok(coachService.getCoaches(searchText, PageRequest.of(pageNo, pageSize,sort)));
     }
 
     @GetMapping("/{id}")

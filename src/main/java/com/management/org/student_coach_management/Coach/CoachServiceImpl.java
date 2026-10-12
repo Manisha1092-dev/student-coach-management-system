@@ -10,6 +10,7 @@ import com.management.org.student_coach_management.Student.entity.Student;
 import com.management.org.student_coach_management.Student.mapper.StudentMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,8 +39,9 @@ public class CoachServiceImpl implements CoachService {
     }
 
     @Override
-    public List<CoachDTO> getCoaches(Pageable pageable) {
-        List<Coach> coaches = coachRepository.findAll(pageable).getContent();
+    public List<CoachDTO> getCoaches(String searchText, Pageable pageable) {
+        Specification<Coach> spec = CoachSpecification.searchAllFields(searchText);
+        List<Coach> coaches = coachRepository.findAll(spec, pageable).getContent();
         return coaches.stream().map(CoachMapper::toDTO).collect(Collectors.toList());
     }
 
@@ -77,9 +79,11 @@ public class CoachServiceImpl implements CoachService {
         return CoachMapper.toDTO(coach);
     }
 
-        /** Return a page of StudentDTOs enrolled with the given coach id. */
-        @Override
-        public List<StudentDTO> getEnrolledStudents(Pageable pageable, int id) {
+    /**
+     * Return a page of StudentDTOs enrolled with the given coach id.
+     */
+    @Override
+    public List<StudentDTO> getEnrolledStudents(Pageable pageable, int id) {
         Coach coach = coachRepository.findById((long) id).orElse(null);
         if (coach == null) {
             throw new CoachNotFoundException("Coach not found with id: " + id);
