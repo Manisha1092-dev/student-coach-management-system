@@ -27,11 +27,8 @@ public class CoachSpecification {
                 int years = Integer.parseInt(searchText);
                 experienceMatch = cb.equal(root.get("experience"), years);
             } else {
-                // fallback: treat as string
-                experienceMatch = cb.like(
-                        cb.function("CAST", String.class, root.get("experience")),
-                        "%" + searchText + "%"
-                );
+                // fallback: ignore experience for non-numeric searches
+                experienceMatch = cb.disjunction();
             }
 
             // Combine with OR → match if searchText appears in ANY field
