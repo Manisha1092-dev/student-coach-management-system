@@ -6,6 +6,7 @@ import com.management.org.student_coach_management.Student.entity.Student;
 import com.management.org.student_coach_management.Student.mapper.StudentMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,10 +32,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentDTO> getStudents(Pageable pageable) {
+    public List<StudentDTO> getStudents(String firstName, String lastName, String major, String email,Pageable pageable) {
         // Fetch a page of Student entities from the repository using the provided Pageable
         // (Pageable supports sorting + pagination at the DB level).
-        Page<Student> studentsPage = studentRepository.findAll(pageable);
+        Specification<Student> spec = StudentSpecification.filterStudents(firstName, lastName, major, email);
+        Page<Student> studentsPage = studentRepository.findAll(spec,pageable);
         return studentsPage.getContent()
                 .stream()
                 .map(StudentMapper::toDTO)

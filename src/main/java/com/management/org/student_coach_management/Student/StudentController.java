@@ -34,9 +34,13 @@ public class StudentController {
     public ResponseEntity<List<StudentDTO>> getStudents(@RequestParam(required = false, defaultValue = "0") int pageNo,
                                                         @RequestParam(required = false, defaultValue = "5") int pageSize,
                                                         @RequestParam(required = false, defaultValue = "id") String sortBy,
-                                                        @RequestParam(required = false, defaultValue = "asc") String sortDir) {
+                                                        @RequestParam(required = false, defaultValue = "asc") String sortDir,
+                                                        @RequestParam(required = false) String firstName,
+                                                        @RequestParam(required = false) String lastName,
+                                                        @RequestParam(required = false) String major,
+                                                        @RequestParam(required = false) String email) {
         Sort sort = Sort.by(sortDir.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy);
-        return new ResponseEntity<>(studentService.getStudents(PageRequest.of(pageNo, pageSize, sort)), HttpStatus.OK);
+        return new ResponseEntity<>(studentService.getStudents(firstName, lastName, major, email, PageRequest.of(pageNo, pageSize, sort)), HttpStatus.OK);
 
         /**
          *

@@ -14,7 +14,7 @@ public interface StudentService {
 
     StudentDTO createStudent(StudentDTO studentDTO);
 
-    List<StudentDTO> getStudents(Pageable pageable);
+    List<StudentDTO> getStudents(String firstName, String lastName, String major, String email, Pageable pageable);
 
     StudentDTO getStudent(int id);
 
